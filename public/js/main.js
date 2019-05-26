@@ -1,5 +1,5 @@
 var campo = $('.campo');
-var tempoInicial = 10;
+var tempoInicial = 2;
 var btnReiniciar = $('.reiniciar');
 
 $(function(){
@@ -103,26 +103,24 @@ function inserePlacar(){
 	var nome = 'Biglidio';
 	var numPalavras = $('#palavras').text().split(" ")[0];
 
-	var colNome = document.createElement('td');
-	$(colNome).append(document.createTextNode(nome));
+	var colNome = $('<td>').text(nome);
 	
-	var colNumPalavras = document.createElement('td');
-	$(colNumPalavras).append(document.createTextNode(numPalavras));
-
-	var colRemover = document.createElement('td');
-	$(colRemover).append('<a href="#" class="remover-placar"><i class="small material-icons">delete</i></a>');
+	var colNumPalavras = $('<td>').text(numPalavras);
 	
-	var linha = document.createElement('tr');
-	$(linha).append(colNome);
-	$(linha).append(colNumPalavras);
-	$(linha).append(colRemover);
+	var colRemover = $('<td>');
+	var link = $('<a>').addClass('remover-placar').attr('href', '#');
+	var icone = $('<i>').addClass('small material-icons').text('delete');
+	colRemover.append(link.append(icone));
+	link.click(removerPlacar);
+	
+	var linha = $('<tr>');
+	linha.append(colNome);
+	linha.append(colNumPalavras);
+	linha.append(colRemover);
 	
 	$(placar).prepend(linha);
-	removerPlacar();
 }
-function removerPlacar(){
-	$('.remover-placar').click(function(e){
-		e.preventDefault();
-		$(this).parent().parent().remove();
-	});
+function removerPlacar(e){
+	e.preventDefault();
+	$(this).parent().parent().remove();
 }
