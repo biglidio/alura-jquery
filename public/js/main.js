@@ -1,32 +1,71 @@
 var campo = $('.campo');
-campo.on('input', function(){
-	var campo = $(this);
-	var texto = campo.val();
+var tempoInicial = 3;
+var btnReiniciar = $('.reiniciar');
 
-	var qtdPalavras = texto.split(/\S+/).length -1;
-	$('#palavras').text(qtdPalavras + " palavra" + ((qtdPalavras == 1) ? "" : "s"));
-
-	var qtdCaracteres = texto.length;
-	$('#caracteres').text(qtdCaracteres + " caracter" + ((qtdCaracteres == 1) ? "" : "es"));
+$(function(){
+	calculaTamanhos();
+	inicializaCronometro();
+	btnReiniciar.click(reiniciaJogo);
 });
 
-var tempoRestante = 3;
-$('#segundos').text(tempoRestante + " segundo" + ((tempoRestante == 1) ? "" : "s"));
+function calculaTamanhos(){
+	campo.on('input', function(){
+		var texto = campo.val();
+	
+		var qtdPalavras = texto.split(/\S+/).length -1;
+		var qtdCaracteres = texto.length;
 
-campo.one('focus', function(){
-	var intervalo = setInterval(function(){
-		tempoRestante--;
-		$('#segundos').text(tempoRestante + " segundo" + ((tempoRestante == 1) ? "" : "s"));
-		
-		if(tempoRestante < 1) {
-			campo.attr('disabled', 1);
-			clearInterval(intervalo);
+		atualizaPalavras(qtdPalavras);
+		atualizaCaracteres(qtdCaracteres);
+	});
+}
+
+function inicializaCronometro(){
+	var tempoRestante = tempoInicial;
+	atualizaTempo(tempoRestante);
+	
+	campo.one('focus', function(){
+		var intervalo = setInterval(function(){
+			tempoRestante--;
+			atualizaTempo(tempoRestante);
 			
-			var gameOver = $(document.createElement('div'));
-			gameOver.text('Game Over!')
-				.css('color', 'red')
-				.css('font-style', 'italic');
-			$(campo).after(gameOver);
-		}
-	}, 1000); 
-});
+			if(tempoRestante < 1) {
+				campo.attr('disabled', 1);
+				clearInterval(intervalo);
+
+				btnReiniciar.attr('disabled', false);
+				
+				var gameOver = $(document.createElement('div'));
+				gameOver.text('Game Over!')
+					.css('color', 'red')
+					.css('font-style', 'italic');
+
+				$(campo).after(gameOver);
+			}
+		}, 1000); 
+	});
+}
+
+function reiniciaJogo(){
+	campo.attr('disabled', false);
+	campo.val("");
+
+	btnReiniciar.attr('disabled', true);
+	$('div').remove();
+	atualizaTempo(tempoInicial);
+	atualizaPalavras(0);
+	atualizaCaracteres(0);
+	inicializaCronometro();
+}
+
+function atualizaTempo(tempo){
+	$('#segundos').text(tempo + " segundo" + ((tempo == 1) ? "" : "s"));
+}
+
+function atualizaPalavras(qtd){
+	$('#palavras').text(qtd + " palavra" + ((qtd == 1) ? "" : "s"));
+}
+
+function atualizaCaracteres(qtd){
+	$('#caracteres').text(qtd + " caracter" + ((qtd == 1) ? "" : "es"));
+};
