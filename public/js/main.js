@@ -108,10 +108,21 @@ function inserePlacar(){
 	
 	var colNumPalavras = document.createElement('td');
 	$(colNumPalavras).append(document.createTextNode(numPalavras));
+
+	var colRemover = document.createElement('td');
+	$(colRemover).append('<a href="#" class="remover-placar"><i class="small material-icons">delete</i></a>');
 	
 	var linha = document.createElement('tr');
 	$(linha).append(colNome);
 	$(linha).append(colNumPalavras);
+	$(linha).append(colRemover);
 	
 	$(placar).prepend(linha);
+	removerPlacar();
+}
+function removerPlacar(){
+	$('.remover-placar').click(function(e){
+		e.preventDefault();
+		$(this).parent().parent().remove();
+	});
 }
