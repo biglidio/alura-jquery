@@ -25,12 +25,12 @@ function inserePlacar(){
 function removerPlacar(e){
 	e.preventDefault();
 	var linha = $(this).parent().parent();
-	linha.fadeOut();
+	linha.stop().fadeOut();
 	setTimeout(function(){
-		linha.remove();
+		linha.stop().remove();
 	}, 1000);
 }
 
 function mostraPlacar(){
-	$('.placar').slideToggle(600);
+	$('.placar').stop().slideToggle(600);
 }
