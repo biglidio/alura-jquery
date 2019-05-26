@@ -1,8 +1,12 @@
 $('.troca-frase').click(fraseAleatoria);
 
 function fraseAleatoria(){
+    $('.spinner').show();
     $.get('http://localhost:3000/frases', trocarFraseAleatoria)
-        .fail(mostraErro());
+        .fail(mostraErro())
+        .always(function(){
+            $('.spinner').hide();
+        });
 }
 
 function trocarFraseAleatoria(data){
