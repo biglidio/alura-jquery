@@ -1,4 +1,4 @@
-
+$('.mostra-placar').click(mostraPlacar);
 function inserePlacar(){
 	var placar = $('.placar').find('tbody');
 	var nome = 'Biglidio';
@@ -25,4 +25,8 @@ function inserePlacar(){
 function removerPlacar(e){
 	e.preventDefault();
 	$(this).parent().parent().remove();
+}
+
+function mostraPlacar(){
+	$('.placar').slideToggle(600);
 }
