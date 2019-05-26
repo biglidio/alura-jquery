@@ -1,5 +1,5 @@
 var campo = $('.campo');
-var tempoInicial = 10;
+var tempoInicial = 5;
 var btnReiniciar = $('.reiniciar');
 
 $(function(){

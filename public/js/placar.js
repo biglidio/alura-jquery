@@ -24,7 +24,11 @@ function inserePlacar(){
 
 function removerPlacar(e){
 	e.preventDefault();
-	$(this).parent().parent().remove();
+	var linha = $(this).parent().parent();
+	linha.fadeOut();
+	setTimeout(function(){
+		linha.remove();
+	}, 1000);
 }
 
 function mostraPlacar(){
