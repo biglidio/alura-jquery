@@ -1,7 +1,8 @@
 $('.troca-frase').click(fraseAleatoria);
 
 function fraseAleatoria(){
-    $.get('http://localhost:3000/frases', trocarFraseAleatoria);
+    $.get('http://localhost:3000/frases', trocarFraseAleatoria)
+        .fail(mostraErro());
 }
 
 function trocarFraseAleatoria(data){
@@ -15,4 +16,11 @@ function trocarFraseAleatoria(data){
 
 function atualizaTempoInicial(tempo){
     tempoInicial = tempo;
+}
+
+function mostraErro(){
+    $('.erro').show();
+    setTimeout(function(){
+        $('.erro').hide();
+    }, 5000);
 }
