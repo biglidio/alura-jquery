@@ -1,4 +1,5 @@
 $('.mostra-placar').click(mostraPlacar);
+
 function inserePlacar(){
 	var placar = $('.placar').find('tbody');
 	var nome = 'Biglidio';
@@ -20,6 +21,8 @@ function inserePlacar(){
 	linha.append(colRemover);
 	
 	$(placar).prepend(linha);
+	$('.placar').slideDown(600);
+	scrollPlacar();
 }
 
 function removerPlacar(e){
@@ -33,4 +36,12 @@ function removerPlacar(e){
 
 function mostraPlacar(){
 	$('.placar').stop().slideToggle(600);
+}
+
+function scrollPlacar(){
+	var posicaoPlacar = $('.placar').offset().top;
+	$("html, body").animate(
+	{
+		scrollTop: posicaoPlacar+"px"
+	}, 1000);
 }
