@@ -9,4 +9,10 @@ function trocarFraseAleatoria(data){
     var numAleatorio = Math.floor(Math.random() * data.length);
 
     frase.text(data[numAleatorio].texto);
+    atualizaTempoInicial(data[numAleatorio].tempo);
+    atualizaTempo(data[numAleatorio].tempo);
+}
+
+function atualizaTempoInicial(tempo){
+    tempoInicial = tempo;
 }
