@@ -1,0 +1,8 @@
+.campo-desativado {
+    background-color: lightgrey;
+}
+
+.campo {
+    font-size: 20px;
+    height: 150px;
+}

@@ -31,16 +31,16 @@ function inicializaCronometro(){
 			
 			if(tempoRestante < 1) {
 				campo.attr('disabled', 1);
-				clearInterval(intervalo);
-
+				campo.addClass('campo-desativado');
 				btnReiniciar.attr('disabled', false);
-				
+
 				var gameOver = $(document.createElement('div'));
 				gameOver.text('Game Over!')
 					.css('color', 'red')
 					.css('font-style', 'italic');
-
 				$(campo).after(gameOver);
+				
+				clearInterval(intervalo);
 			}
 		}, 1000); 
 	});
