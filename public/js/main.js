@@ -31,11 +31,12 @@ function inicializaCronometro(){
 			
 			if(tempoRestante < 1) {
 				campo.attr('disabled', 1);
-				campo.addClass('campo-desativado');
+				campo.toggleClass('campo-desativado');
 				btnReiniciar.attr('disabled', false);
 
-				var gameOver = $(document.createElement('div'));
+				var gameOver = $(document.createElement('span'));
 				gameOver.text('Game Over!')
+					.addClass('game-over')
 					.css('color', 'red')
 					.css('font-style', 'italic');
 				$(campo).after(gameOver);
@@ -48,10 +49,11 @@ function inicializaCronometro(){
 
 function reiniciaJogo(){
 	campo.attr('disabled', false);
+	campo.toggleClass('campo-desativado');
 	campo.val("");
 
 	btnReiniciar.attr('disabled', true);
-	$('div').remove();
+	$('.game-over').remove();
 	atualizaTempo(tempoInicial);
 	atualizaPalavras(0);
 	atualizaCaracteres(0);
