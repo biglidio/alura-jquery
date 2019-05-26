@@ -1,12 +1,20 @@
 var campo = $('.campo');
-var tempoInicial = 3;
+var tempoInicial = 10;
 var btnReiniciar = $('.reiniciar');
 
 $(function(){
+	tamanhoFrase();
 	calculaTamanhos();
 	inicializaCronometro();
+	inicializaCorretor();
 	btnReiniciar.click(reiniciaJogo);
 });
+
+function tamanhoFrase(){
+	var frase = $('.frase').text();
+	var qtdPalavras = frase.split(/\S+/).length -1;
+	atualizaPalavras(qtdPalavras, '#palavras-frase');
+}
 
 function calculaTamanhos(){
 	campo.on('input', function(){
@@ -15,7 +23,7 @@ function calculaTamanhos(){
 		var qtdPalavras = texto.split(/\S+/).length -1;
 		var qtdCaracteres = texto.length;
 
-		atualizaPalavras(qtdPalavras);
+		atualizaPalavras(qtdPalavras, '#palavras');
 		atualizaCaracteres(qtdCaracteres);
 	});
 }
@@ -48,14 +56,15 @@ function inicializaCronometro(){
 }
 
 function reiniciaJogo(){
+	campo.val("");
 	campo.attr('disabled', false);
 	campo.toggleClass('campo-desativado');
-	campo.val("");
-
+	campo.removeClass('correto errado');
+	
 	btnReiniciar.attr('disabled', true);
 	$('.game-over').remove();
 	atualizaTempo(tempoInicial);
-	atualizaPalavras(0);
+	atualizaPalavras(0, '#palavras');
 	atualizaCaracteres(0);
 	inicializaCronometro();
 }
@@ -64,10 +73,22 @@ function atualizaTempo(tempo){
 	$('#segundos').text(tempo + " segundo" + ((tempo == 1) ? "" : "s"));
 }
 
-function atualizaPalavras(qtd){
-	$('#palavras').text(qtd + " palavra" + ((qtd == 1) ? "" : "s"));
+function atualizaPalavras(qtd, elem){
+	$(elem).text(qtd + " palavra" + ((qtd == 1) ? "" : "s"));
 }
 
 function atualizaCaracteres(qtd){
 	$('#caracteres').text(qtd + " caracter" + ((qtd == 1) ? "" : "es"));
 };
+
+function inicializaCorretor(){
+	campo.on('input', function(){
+		if ($('.frase').text().includes(campo.val())) {
+			campo.addClass('correto');
+			campo.removeClass('errado');
+		} else {
+			campo.removeClass('correto');
+			campo.addClass('errado');
+		}
+	});
+}

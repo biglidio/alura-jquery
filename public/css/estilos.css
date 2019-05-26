@@ -2,9 +2,22 @@
     background-color: lightgrey;
 }
 
+.frase {
+    font-size: 20px;
+    text-align: left;
+}
+
 .campo {
     font-size: 20px;
     height: 150px;
+    border: 3px solid black;
+}
+
+.campo.correto {
+    border-color: green;
+}
+.campo.errado {
+    border-color: red;
 }
 
 .icones {
