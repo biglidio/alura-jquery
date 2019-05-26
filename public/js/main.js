@@ -38,21 +38,26 @@ function inicializaCronometro(){
 			atualizaTempo(tempoRestante);
 			
 			if(tempoRestante < 1) {
-				campo.attr('disabled', 1);
-				campo.toggleClass('campo-desativado');
-				btnReiniciar.attr('disabled', false);
-
-				var gameOver = $(document.createElement('span'));
-				gameOver.text('Game Over!')
-					.addClass('game-over')
-					.css('color', 'red')
-					.css('font-style', 'italic');
-				$(campo).after(gameOver);
-				
+				finalizaJogo();
 				clearInterval(intervalo);
 			}
 		}, 1000); 
 	});
+}
+
+function finalizaJogo(){
+	campo.attr('disabled', 1);
+	campo.toggleClass('campo-desativado');
+	btnReiniciar.attr('disabled', false);
+
+	var gameOver = $(document.createElement('span'));
+	gameOver.text('Game Over!')
+		.addClass('game-over')
+		.css('color', 'red')
+		.css('font-style', 'italic');
+	$(campo).after(gameOver);
+
+	inserePlacar();
 }
 
 function reiniciaJogo(){
@@ -91,4 +96,22 @@ function inicializaCorretor(){
 			campo.addClass('errado');
 		}
 	});
+}
+
+function inserePlacar(){
+	var placar = $('.placar').find('tbody');
+	var nome = 'Biglidio';
+	var numPalavras = $('#palavras').text().split(" ")[0];
+
+	var colNome = document.createElement('td');
+	$(colNome).append(document.createTextNode(nome));
+	
+	var colNumPalavras = document.createElement('td');
+	$(colNumPalavras).append(document.createTextNode(numPalavras));
+	
+	var linha = document.createElement('tr');
+	$(linha).append(colNome);
+	$(linha).append(colNumPalavras);
+	
+	$(placar).prepend(linha);
 }
