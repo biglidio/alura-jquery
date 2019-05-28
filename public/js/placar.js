@@ -3,7 +3,7 @@ $('.botao-sync').click(sincronizarPlacar);
 
 function inserePlacar(){
 	var placar = $('.placar').find('tbody');
-	var linha = novaLinha('Lucas', $('#palavras').text().split(" ")[0]);
+	var linha = novaLinha($('#usuarios').val(), $('#palavras').text().split(" ")[0]);
 	$(placar).prepend(linha);
 
 	$('.placar').slideDown(600);
@@ -71,15 +71,21 @@ function sincronizarPlacar(){
 	var dados = {
 		placar: placar
 	}
-
-	$.post("http://localhost:3000/placar", dados);
+    $('.spinner').show();
+	$.post("http://localhost:3000/placar", dados)
+		.always(function(){
+			$('.spinner').hide();
+		});
 }
 
 function atualizaPlacar(){
+    $('.spinner').show();
 	$.get("http://localhost:3000/placar", function(data){
 		$(data).each(function(){
 			var linha = novaLinha(this.usuario, this.pontos);
 			$('tbody').prepend($(linha));
 		});
+	}).always(function(){
+		$('.spinner').hide();
 	});
 }

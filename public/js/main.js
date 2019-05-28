@@ -9,6 +9,11 @@ $(function(){
 	inicializaCorretor();
 	atualizaPlacar();
 	btnReiniciar.click(reiniciaJogo);
+
+	$('#usuarios').selectize({
+		create: true,
+		softField: 'text'
+	});
 });
 
 function tamanhoFrase(){
