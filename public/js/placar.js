@@ -1,4 +1,5 @@
 $('.mostra-placar').click(mostraPlacar);
+$('.botao-sync').click(sincronizarPlacar);
 
 function inserePlacar(){
 	var placar = $('.placar').find('tbody');
@@ -44,4 +45,27 @@ function scrollPlacar(){
 	{
 		scrollTop: posicaoPlacar+"px"
 	}, 1000);
+}
+
+function sincronizarPlacar(){
+	var placar = [];
+	var linhas = $('tbody > tr');
+
+	linhas.each(function(){
+		var usuario = $(this).find('td:nth-child(1)').text();
+		var pontos = $(this).find('td:nth-child(1)').text();
+
+		var score = {
+			usuario: usuario,
+			pontos: pontos
+		}
+
+		placar.push(score);
+	});
+
+	var dados = {
+		placar: placar
+	}
+
+	$.post("http://localhost:3000/placar", dados);
 }
