@@ -7,6 +7,7 @@ $(function(){
 	calculaTamanhos();
 	inicializaCronometro();
 	inicializaCorretor();
+	atualizaPlacar();
 	btnReiniciar.click(reiniciaJogo);
 });
 

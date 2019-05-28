@@ -3,8 +3,16 @@ $('.botao-sync').click(sincronizarPlacar);
 
 function inserePlacar(){
 	var placar = $('.placar').find('tbody');
-	var nome = 'Biglidio';
-	var numPalavras = $('#palavras').text().split(" ")[0];
+	var linha = novaLinha('Lucas', $('#palavras').text().split(" ")[0]);
+	$(placar).prepend(linha);
+
+	$('.placar').slideDown(600);
+	scrollPlacar();
+}
+
+function novaLinha(usuario, pontos){
+	var nome = usuario;
+	var numPalavras = pontos;
 
 	var colNome = $('<td>').text(nome);
 	
@@ -20,12 +28,9 @@ function inserePlacar(){
 	linha.append(colNome);
 	linha.append(colNumPalavras);
 	linha.append(colRemover);
-	
-	$(placar).prepend(linha);
-	$('.placar').slideDown(600);
-	scrollPlacar();
-}
 
+	return linha;
+}
 function removerPlacar(e){
 	e.preventDefault();
 	var linha = $(this).parent().parent();
@@ -53,7 +58,7 @@ function sincronizarPlacar(){
 
 	linhas.each(function(){
 		var usuario = $(this).find('td:nth-child(1)').text();
-		var pontos = $(this).find('td:nth-child(1)').text();
+		var pontos = $(this).find('td:nth-child(2)').text();
 
 		var score = {
 			usuario: usuario,
@@ -68,4 +73,13 @@ function sincronizarPlacar(){
 	}
 
 	$.post("http://localhost:3000/placar", dados);
+}
+
+function atualizaPlacar(){
+	$.get("http://localhost:3000/placar", function(data){
+		$(data).each(function(){
+			var linha = novaLinha(this.usuario, this.pontos);
+			$('tbody').prepend($(linha));
+		});
+	});
 }
