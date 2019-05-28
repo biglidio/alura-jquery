@@ -1,5 +1,6 @@
 $('.troca-frase').click(fraseAleatoria);
 $('.botao-frase-id').click(buscaFrase);
+$('.botao-sync').click(sincronizarPlacar);
 
 function fraseAleatoria(){
     $('.spinner').show();
