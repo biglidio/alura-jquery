@@ -71,21 +71,23 @@ function sincronizarPlacar(){
 	var dados = {
 		placar: placar
 	}
-    $('.spinner').show();
-	$.post("http://localhost:3000/placar", dados)
-		.always(function(){
-			$('.spinner').hide();
-		});
+	$.post("http://localhost:3000/placar", dados, function(){
+		// $('.tooltip').tooltipster('open');
+		$('.tooltip').tooltipster('open').tooltipster('content', 'Sincronizado com sucesso!');
+	}).fail(function(){
+		$('.tooltip').tooltipster('open').tooltipster('content', 'Falha ao sincronizar!');
+	}).always(function(){
+		setTimeout(function(){
+			$('.tooltip').tooltipster('close');
+		}, 1200);
+	});
 }
 
 function atualizaPlacar(){
-    $('.spinner').show();
-	$.get("http://localhost:3000/placar", function(data){
+    $.get("http://localhost:3000/placar", function(data){
 		$(data).each(function(){
 			var linha = novaLinha(this.usuario, this.pontos);
 			$('tbody').prepend($(linha));
 		});
-	}).always(function(){
-		$('.spinner').hide();
 	});
 }

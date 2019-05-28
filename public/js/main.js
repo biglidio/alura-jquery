@@ -14,6 +14,10 @@ $(function(){
 		create: true,
 		softField: 'text'
 	});
+
+	$('.tooltip').tooltipster({
+		trigger: 'custom'
+	});
 });
 
 function tamanhoFrase(){
